@@ -30,12 +30,14 @@ public class LL {
     public void insertLast(int val){
         if(tail == null){
             insertFirst(val);
+            return;
         }
 
-        Node node = new Node(val);
-        tail.next = node;
-        tail = node;
-        size++;
+            Node node = new Node(val);
+            tail.next = node;
+            tail = node;
+            size++;
+
     }
     public void insert(int val, int index){
         if(index == 0){
@@ -143,6 +145,86 @@ public class LL {
             this.value = value;
             this.next = next;
         }
+    }
+
+//    Leetcode problems
+//    Remove duplicates
+    public void duplicates(){
+        Node node = head;
+
+        while(node.next != null){
+            if (node.value == node.next.value){
+                node.next = node.next.next;
+                size--;
+            }else{
+                node = node.next;
+            }
+        }
+
+        tail = node;
+        tail.next = null;
+    }
+//    Merge linked lists
+    public static LL merge(LL first, LL second){
+        Node f = first.head;
+        Node s = second.head;
+
+        LL ans = new LL();
+
+        while(f!=null && s!=null){
+            if(f.value < s.value){
+                ans.insertLast(f.value);
+                f=f.next;
+            }else{
+                ans.insertLast(s.value);
+                s=s.next;
+            }
+        }
+
+        while(f!=null){
+            ans.insertLast(f.value);
+            f=f.next;
+        }
+        while(s!=null){
+            ans.insertLast(s.value);
+            s=s.next;
+        }
+        return ans;
+    }
+
+
+    public static void main(String[] args) {
+//        LL list = new LL();
+//
+//        list.insertLast(1);
+//        list.insertLast(1);
+//        list.insertLast(2);
+//        list.insertLast(2);
+//        list.insertLast(3);
+//        list.insertLast(3);
+//        list.display();
+//        list.duplicates();
+//        list.display();
+
+        LL first = new LL();
+        LL second = new LL();
+
+        first.insertLast(1);
+        first.insertLast(2);
+        first.insertLast(8);
+        first.display();
+
+        second.insertLast(3);
+        second.insertLast(5);
+        second.insertLast(7);
+        second.display();
+
+        LL.merge(first, second).display();
+
+
+
+
+
     }
 
 }
